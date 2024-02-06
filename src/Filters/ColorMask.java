@@ -4,15 +4,13 @@ import Interfaces.Interactive;
 import Interfaces.PixelFilter;
 import core.DImage;
 
-import javax.swing.*;
 import java.util.ArrayList;
 
 public class ColorMask implements PixelFilter, Interactive {
     private short threshold;
     private ArrayList<Point> colors;
-    private short[][] red;
-    private short[][] green;
-    private short[][] blue;
+    private short[][] red, blue, green;
+    private boolean[][] masked;
 
     public ColorMask(){
         colors = new ArrayList<>();
@@ -24,14 +22,28 @@ public class ColorMask implements PixelFilter, Interactive {
         red = img.getRedChannel();
         green = img.getGreenChannel();
         blue = img.getBlueChannel();
+        masked = new boolean[red.length][red[0].length];
 
-        findColor();
+        maskColors();
 
+        for (int i = 0; i < masked.length; i++) {
+            for (int j = 0; j < masked[i].length; j++) {
+                if(masked[i][j]){
+                    red[i][j] = 255;
+                    blue[i][j] = 255;
+                    green[i][j] = 255;
+                }else{
+                    red[i][j] = 0;
+                    blue[i][j] = 0;
+                    green[i][j] = 0;
+                }
+            }
+        }
         img.setColorChannels(red, green, blue);
         return img;
     }
 
-    private void findColor(){
+    private void maskColors(){
         for (Point color : colors){
             loopThroughPixels(color);
         }
@@ -41,15 +53,8 @@ public class ColorMask implements PixelFilter, Interactive {
         for (int i = 0; i < red.length; i++) {
             for (int j = 0; j < red[i].length; j++) {
                 if(checkColor(red[i][j],green[i][j],blue[i][j], color)){
-                    red[i][j] = 255;
-                    green[i][j] = 255;
-                    blue[i][j] = 255;
-                }else{
-                    red[i][j] = 0;
-                    green[i][j] = 0;
-                    blue[i][j] = 0;
+                    masked[i][j] = true;
                 }
-
             }
         }
     }
@@ -67,12 +72,16 @@ public class ColorMask implements PixelFilter, Interactive {
     }
 
     public void addColor(short r, short g, short b){
+        System.out.println(r + ", " + g + ", " + b);
         colors.add(new Point(r,g,b));
     }
 
     @Override
     public void mouseClicked(int mouseX, int mouseY, DImage img) {
-        addColor(red[mouseX][mouseY],green[mouseX][mouseY], blue[mouseX][mouseY]);
+        short[][] r1 = img.getRedChannel();
+        short[][] g1 = img.getGreenChannel();
+        short[][] b1 = img.getBlueChannel();
+        addColor(r1[mouseY][mouseX],g1[mouseY][mouseX], b1[mouseY][mouseX]);
     }
 
     @Override
