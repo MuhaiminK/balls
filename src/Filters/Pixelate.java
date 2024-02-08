@@ -8,7 +8,7 @@ import javax.swing.*;
 public class Pixelate implements PixelFilter {
     public DImage processImage(DImage img) {
         short[][] arr = img.getBWPixelGrid();
-        int n1 = Integer.parseInt(JOptionPane.showInputDialog("Input pixelation radius"));
+        int n1 = 7;
         for (int i = n1; i < arr.length-n1; i += n1*2){
             for (int j = n1; j < arr[i].length-n1; j += n1*2) {
                 arr = loopThroughSquares(arr,n1,i,j);

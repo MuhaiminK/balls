@@ -3,11 +3,11 @@ package Filters;
 import Interfaces.PixelFilter;
 import core.DImage;
 
-public class FixedThresholdFilter implements PixelFilter {
+public class Threshold implements PixelFilter {
     private int threshold;
 
-    public FixedThresholdFilter() {
-        threshold = 127;
+    public Threshold() {
+        threshold = 130;
     }
 
     @Override

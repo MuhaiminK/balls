@@ -11,10 +11,16 @@ public class ColorMask implements PixelFilter, Interactive {
     private ArrayList<Point> colors;
     private short[][] red, blue, green;
     private boolean[][] masked;
+    private ArrayList<PixelFilter> filters = new ArrayList<>();
 
     public ColorMask(){
         colors = new ArrayList<>();
         threshold = 80;
+        PixelFilter blur = new Blur();
+        PixelFilter threshold = new Threshold();
+
+        filters.add(blur);
+        //filters.add(threshold);
     }
 
     @Override
@@ -39,7 +45,11 @@ public class ColorMask implements PixelFilter, Interactive {
                 }
             }
         }
+
         img.setColorChannels(red, green, blue);
+        for(PixelFilter filter : filters){
+            img = filter.processImage(img);
+        }
         return img;
     }
 
@@ -85,12 +95,12 @@ public class ColorMask implements PixelFilter, Interactive {
     }
 
     @Override
-    public void keyPressed(char key) {
-        if(key == '=' || key == '+'){
+    public void keyPressed(char key){
+        if(key == '='){
             threshold += 10;
-        }else if(key == '-' || key == '_'){
+        }else if(key == '-'){
             threshold -= 10;
-        }else if(key == 'r' || key == 'R'){
+        }else if(key == 'r'){
             if(colors.size() >= 1){
                 colors.remove(colors.size()-1);
             }
