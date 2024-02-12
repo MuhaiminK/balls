@@ -2,19 +2,19 @@ package Filters;
 
 import java.util.ArrayList;
 
-public class Cluster extends Point {
-    private ArrayList<Point> points;
+public class Cluster extends colorPoint {
+    private ArrayList<colorPoint> colorPoints;
 
     public Cluster(short r, short g, short b){
         super(r, g, b);
     }
 
     public void clearPoints(){
-        points = new ArrayList<>();
+        colorPoints = new ArrayList<>();
     }
 
-    public void addPoint(Point point){
-        points.add(point);
+    public void addPoint(colorPoint colorPoint){
+        colorPoints.add(colorPoint);
     }
 
     public void changeCenter(short r, short g, short b){
@@ -23,7 +23,7 @@ public class Cluster extends Point {
         this.b = b;
     }
 
-    public ArrayList<Point> getPoints() {
-        return points;
+    public ArrayList<colorPoint> getPoints() {
+        return colorPoints;
     }
 }

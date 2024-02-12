@@ -1,8 +1,8 @@
 package Filters;
 
-public class Point {
+public class colorPoint {
     protected short r, b, g;
-    public Point(short r, short g, short b){
+    public colorPoint(short r, short g, short b){
         this.r = r;
         this.g = g;
         this.b = b;

@@ -8,10 +8,11 @@ import java.util.ArrayList;
 
 public class ColorMask implements PixelFilter, Interactive {
     private short threshold;
-    private ArrayList<Point> colors;
+    private ArrayList<colorPoint> colors;
     private short[][] red, blue, green;
     private boolean[][] masked;
     private ArrayList<PixelFilter> filters = new ArrayList<>();
+    private ArrayList<Ball> balls = new ArrayList<>();
 
     public ColorMask(){
         colors = new ArrayList<>();
@@ -20,7 +21,7 @@ public class ColorMask implements PixelFilter, Interactive {
         PixelFilter threshold = new Threshold();
 
         filters.add(blur);
-        //filters.add(threshold);
+        filters.add(threshold);
     }
 
     @Override
