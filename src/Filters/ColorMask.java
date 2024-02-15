@@ -1,12 +1,14 @@
 package Filters;
 
+import Interfaces.Drawable;
 import Interfaces.Interactive;
 import Interfaces.PixelFilter;
 import core.DImage;
+import processing.core.PApplet;
 
 import java.util.ArrayList;
 
-public class ColorMask implements PixelFilter, Interactive {
+public class ColorMask implements PixelFilter, Interactive, Drawable {
     private short threshold;
     private ArrayList<colorPoint> colors;
     private short[][] red, blue, green;
@@ -68,6 +70,28 @@ public class ColorMask implements PixelFilter, Interactive {
                 }
             }
         }
+    }
+
+    private boolean checkPixels(DImage img) {
+        short[][] grid = img.getBWPixelGrid();
+        for (int i = 0; i < grid.length; i++) {
+            for (int j = 0; j < grid[i].length; j++) {
+                if (grid[i][j] != 0) {
+                    return true;
+                }
+            }
+        }
+        return false;
+    }
+
+    public void initiateBalls(DImage img) {
+        short[][] grid = img.getBWPixelGrid();
+        int r, c;
+        do {
+            r = (int) (Math.random() * grid.length);
+            c = (int) (Math.random() * grid[r].length);
+        } while (grid[r][c] != 255);
+        balls.add(new Ball(r, c));
     }
 
 
