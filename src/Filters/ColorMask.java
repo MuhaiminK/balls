@@ -164,7 +164,7 @@ public class ColorMask implements PixelFilter, Interactive, Drawable {
         col = ball.getCol() - 1;
         imgPoint point1 = new imgPoint(ball.getRow(), col);
         while (col > 0 && grid[ball.getRow()][col] == 255) {
-            point2 = new imgPoint(ball.getRow(), col);
+            point1 = new imgPoint(ball.getRow(), col);
             col--;
         }
         int dist1 = point1.getCol() - ball.getCol();
