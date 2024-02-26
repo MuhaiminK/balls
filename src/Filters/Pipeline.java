@@ -22,15 +22,15 @@ public class Pipeline implements PixelFilter, Interactive {
     }
 
     @Override
-    public DImage processImage(DImage img){
-        for (PixelFilter filter : filters){
+    public DImage processImage(DImage img) {
+        for (PixelFilter filter : filters) {
             img = filter.processImage(img);
         }
 
         return img;
     }
 
-    public void drawOverlay(PApplet Window, DImage original, DImage filtered){
+    public void drawOverlay(PApplet Window, DImage original, DImage filtered) {
 
     }
 
